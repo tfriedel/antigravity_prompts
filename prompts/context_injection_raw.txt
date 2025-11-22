@@ -1,0 +1,61 @@
+USER_REQUEST- at line %dchunk %d: %sMODEL_ALIAS_
+The user has uploaded %d image(s):%s with the following feedback: %s.Add an annotation to %s at line %d.Failed to marshal basic grep result returned the following documents:
+Here is the content of the page:
+The user's current state is as follows:
+The following text is not part of the file, it is a list of rule IDs that you MUST follow:
+The following context is the only information the ASSISTANT has from the user's codebase.
+The following text is not part of the file, it is a list of user-defined rules that you MUST follow:
+The user has mentioned some items in the form @[ITEM]. Here is extra information about the items that were mentioned by the user, in the order that they appear:
+The following is an important list of code items that you have previously edited and viewed. Study this information carefully and only re-view code items if it is absolutely required to proceed. %s\b(?i:(CODEUNIT|PAGE|PAGEEXTENSION|PAGECUSTOMIZATION|DOTNET|ENUM|ENUMEXTENSION|VALUE|QUERY|REPORT|TABLE|TABLEEXTENSION|XMLPORT|PROFILE|CONTROLADDIN|REPORTEXTENSION|INTERFACE|PERMISSIONSET|PERMISSIONSETEXTENSION|ENTITLEMENT))\b
+The following is the serialized parent conversation trajectory that led to this knowledge generation invocation. This context is provided to help you understand the full conversation, but only new steps (after this parent trajectory) will appear in the chat messages below.
+Here is an example:
+USER: <tool_response>
+The user is currently inside class: bazClass
+USER:
+You have a different set of tools than the main agent, limited to doing research and editing the knowledge base. These are the ONLY tools that are available to you. You may see other tools used by the main agent, but if these tools are not listed in YOUR system prompt, then they are NOT available to you. If you attempt to use a tool that is not available to you, you will receive an error.
+USER:
+USER:
+USER_TYPE_UNSPECIFIED
+USER_TYPE_PERSON
+USER_TYPE_NON_PERSON
+The user is asking a question about their codebase. The AI is provided with some potentially relevant code snippets from their codebase. If the AI uses any code-base specific information, it explicitly states its reasoning, and cites the source(s) by filename between backticks, like `{filename}:{function or class name}`
+The following context is the only information the ASSISTANT has from the user's codebase.
+USER:
+USER:
+You have access to a persistent knowledge system that allows you to save and retrieve information across conversations. This system helps you avoid repeating research and enables you to build upon previous work.
+The user is asking a question about their codebase. The AI is provided with some potentially relevant code snippets from their codebase. If the AI uses any code-base specific information, it explicitly states its reasoning, and cites the source(s) by filename between backticks, like `{filename}:{function or class name}`
+The following context is the only information the ASSISTANT has from the user's codebase.
+USER:
+USER:
+The user is giving an instruction to the ASSISTANT to generate code. The AI is provided with some potentially relevant code snippets from their codebase.
+The following context is the only information the ASSISTANT has from the user's codebase.
+USER:
+This is a custom utility that makes it more convenient to edit code files. This tool effectively allows you to execute a diff/patch against a file, but the format of the diff specification is unique to this task, so pay careful attention to these instructions. To use this tool, you should pass a message of the following structure as "input":
+You have access to a task.md file to help you manage and plan tasks. You must update this file CONSTANTLY using a parallel tool call or as a tool call while outputting a response to ensure that you are tracking your tasks and giving the user visibility into your progress.
+USER_ADD
+USER: Can you analyze the core engine module and document its architecture?
+USER: Can you analyze the core engine module and document its architecture?
+USER: This function keeps re-executing unexpectedly even after I added guards
+USER: Add user preferences to the application
+USER: I need to add a caching layer between the API and database
+USER: I need to add a new AI player to my tic-tac-toe game that uses minimax algorithm and follows the existing game architecture patterns.
+USER: The refactoring we just did to extract the game logic into a separate module broke the unit tests.
+USER: What's the difference between `async` and `await` in JavaScript?
+USER_ACCOUNT
+USER_CREDENTIAL
+USER_TYPE_MASK
+USER
+USER_SELECTED
+USER
+USER_LOCATION_REPORTING
+USERPANEL_TV_CLIENT_DIAGNOSTIC
+USERPANEL_IOS_PRIMES
+USERPANEL_BROWSER_DIAGNOSTIC
+USER_TEAM_STATUS_UNSPECIFIED
+USER_TEAM_STATUS_PENDING
+USER_TEAM_STATUS_APPROVED
+USER_TEAM_STATUS_REJECTED
+USER_FEATURES_UNSPECIFIED
+USER_FEATURES_CORTEX
+USER_FEATURES_CORTEX_TEST
+USER_NUX_EVENT_UNSPECIFIED
