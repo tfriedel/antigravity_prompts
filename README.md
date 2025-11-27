@@ -1,131 +1,138 @@
-# Antigravity Prompts Analysis
+# Antigravity Prompts
 
-Reverse-engineered prompts and system analysis from Antigravity (Google's VS Code fork with AI capabilities).
+Extracted system prompts from Antigravity (Google's VS Code fork with AI capabilities).
 
 ## Overview
 
-This repository contains extracted prompts and analysis of Antigravity's AI agent system, focusing on:
+This repository contains system prompts and instructions that power Antigravity's AI agent. These prompts define:
 
-- **Context Compaction**: How the system manages token limits
-- **Knowledge Items (KI)**: Persistent memory and knowledge distillation
-- **Cortex Agent System**: Planning and execution architecture
+- **Agent Identity & Behavior**: How the AI presents itself and interacts
+- **Workflow Modes**: PLANNING, EXECUTION, and VERIFICATION phases
+- **Knowledge Management**: Persistent memory via Knowledge Items (KI)
+- **Task Tracking**: Structured task management with artifacts
+- **Tool Usage**: Available tools and how to use them
 
 ## Directory Structure
 
 ```
 antigravity_prompts/
-├── prompts/                    # Raw extracted prompts from binary
-│   ├── knowledge_items_raw.txt
-│   ├── conversation_logs_raw.txt
-│   ├── context_compaction_raw.txt
-│   ├── system_instructions_raw.txt
-│   ├── agent_modes_raw.txt
-│   ├── browser_agent_raw.txt
-│   ├── cortex_steps_raw.txt
-│   ├── context_injection_raw.txt
-│   ├── template_paths.txt
-│   └── grpc_services.txt
-│
-├── analysis/                   # Written analysis and documentation
-│   ├── knowledge_items_system.md
-│   ├── context_compaction.md
-│   └── cortex_agent_system.md
-│
+├── prompts/
+│   ├── planning-mode.txt      # Full system prompt (agentic mode)
+│   ├── Fast Prompt.txt        # Simplified system prompt
+│   ├── modes.md               # PLANNING/EXECUTION/VERIFICATION modes
+│   ├── knowledge_items.md     # Knowledge Items (KI) system
+│   ├── task.md                # Task management with checklists
+│   ├── implementation_plan.md # Implementation plan artifact format
+│   └── walkthrough.md         # Walkthrough artifact format
+├── CLAUDE.md                  # Project documentation
+├── REVERSE_ENGINEERING.md     # Extraction methodology
 └── README.md
 ```
 
-## Key Findings
+## Prompt Files
 
-### 1. Knowledge Items (KI) System
+### `planning-mode.txt` - Main System Prompt
 
-Antigravity uses a **Knowledge Items system** for persistent memory:
+The complete agentic system prompt (~600 lines) containing:
 
-- **Distillation**: A separate KNOWLEDGE SUBAGENT processes conversations after they end
-- **Structure**: Each KI is a directory with `metadata.json` and `artifacts/`
-- **Operations**: Create, consolidate (merge), and delete KIs
-- **Retrieval**: Semantic search for relevant KIs
+- **Identity**: "You are Antigravity, a powerful agentic AI coding assistant designed by the Google Deepmind team"
+- **User Information**: Workspace paths, OS details, access restrictions
+- **Agentic Mode**: Task boundary system for complex multi-step work
+- **Mode Descriptions**: PLANNING, EXECUTION, VERIFICATION phases
+- **Artifact System**: task.md, implementation_plan.md, walkthrough.md
+- **Tool Definitions**: 25+ tools including browser_subagent, codebase_search, run_command, etc.
+- **Web Development Guidelines**: Tech stack, design aesthetics, SEO best practices
+- **Workflows**: Custom workflow system via `.agent/workflows/*.md`
+- **Communication Style**: GitHub markdown formatting, proactiveness guidelines
 
-See: [analysis/knowledge_items_system.md](analysis/knowledge_items_system.md)
+### `Fast Prompt.txt` - Simplified Prompt
 
-### 2. Context Compaction
+A shorter version (~300 lines) with essential identity, workspace info, tools, and web development guidelines. Missing the full agentic mode features like task boundaries and persistent context.
 
-Multi-layered approach to managing context:
+### `modes.md` - Agent Modes
 
-1. **KI Distillation** - Conversations → compact Knowledge Items
-2. **Checkpoint Truncation** - Periodic checkpoints with truncation on overflow
-3. **Trajectory Summaries** - Compact conversation representations
-4. **LRU Cache** - Least Recently Used eviction for context items
-5. **Context Refresh** - Re-evaluation on IDE actions/chat events
+Defines the three operational modes:
 
-See: [analysis/context_compaction.md](analysis/context_compaction.md)
+| Mode | Purpose |
+|------|---------|
+| **PLANNING** | Research, understand requirements, create implementation_plan.md, get user approval |
+| **EXECUTION** | Implement the approved plan, return to PLANNING if encountering issues |
+| **VERIFICATION** | Prove work is complete, capture evidence, create walkthrough.md |
 
-### 3. Cortex Agent System
+### `knowledge_items.md` - Knowledge Items System
 
-Step-based execution architecture:
+Instructions for using the persistent memory system:
 
-- **Planning Steps**: UserInput → PlannerResponse → FileBreakdown → BrainUpdate
-- **Execution Steps**: ProposeCode, CodeAction, RunCommand, ViewCodeItem
-- **Control Steps**: Checkpoint, TaskBoundary, Finish
-- **Agent Modes**: READ-ONLY (propose) vs EDIT (direct changes)
+- **Mandatory First Step**: Check KI summaries before ANY research
+- **KI Structure**: Each KI has `metadata.json` and `artifacts/` directory
+- **When to Use**: Debugging, following patterns, complex implementations
+- **Key Principle**: KIs are starting points, not ground truth - always verify
 
-See: [analysis/cortex_agent_system.md](analysis/cortex_agent_system.md)
+### `task.md` - Task Management
+
+Checklist-based task tracking:
+```markdown
+- [ ] uncompleted task    <!-- id: 0 -->
+- [/] in progress task    <!-- id: 1 -->
+- [x] completed task      <!-- id: 2 -->
+```
+
+### `implementation_plan.md` - Plan Artifact
+
+Template for technical plans with:
+- Goal description and context
+- User review requirements
+- Proposed changes grouped by component
+- Verification plan (automated tests + manual verification)
+- Confidence assessment (6-question framework)
+
+### `walkthrough.md` - Completion Artifact
+
+Post-implementation summary with:
+- Changes made
+- Verification results
+- Embedded screenshots/recordings
+
+## Key Features
+
+### Task Boundary System
+
+For complex tasks, the agent uses `task_boundary` tool to:
+- Set TaskName, TaskSummary, TaskStatus
+- Track mode (PLANNING/EXECUTION/VERIFICATION)
+- Update progress without overwhelming the user
+
+### Confidence Assessment
+
+Before notifying users, agents must rate confidence (0.0-1.0) based on:
+1. Gaps in addressing the request?
+2. Unverified assumptions?
+3. Complex logic with unknowns?
+4. Non-trivial interaction risks?
+5. Ambiguous requirements?
+6. Irreversible changes?
+
+### Persistent Context
+
+Two mechanisms for cross-conversation memory:
+1. **Conversation Logs**: Raw history in `.system_generated/logs`
+2. **Knowledge Items**: Distilled knowledge by KNOWLEDGE SUBAGENT
+
+### Available Tools
+
+| Category | Tools |
+|----------|-------|
+| **Search** | codebase_search, grep_search, find_by_name, search_in_file, search_web |
+| **Files** | view_file, write_to_file, replace_file_content, multi_replace_file_content |
+| **Terminal** | run_command, command_status, send_command_input, read_terminal |
+| **Browser** | browser_subagent, read_url_content |
+| **Analysis** | view_file_outline, view_code_item, list_dir |
+| **Media** | generate_image |
 
 ## Source
 
-All data extracted from:
-```
-Antigravity 1.104.0
-Binary: resources/app/extensions/antigravity/bin/language_server_windows_x64.exe
-```
-
-## Extraction Method
-
-Prompts were extracted using `strings` command on the language server binary:
-
-```bash
-strings language_server_windows_x64.exe | grep -iE "<pattern>"
-```
-
-## Notable Prompts
-
-### Knowledge Subagent Description
-```
-KIs contain curated knowledge on specific topics. Individual KIs can be updated
-or expanded over multiple conversations. They are generated by a separate
-KNOWLEDGE SUBAGENT that reads the conversations and then distills the information
-into new KIs or updates existing KIs as appropriate.
-```
-
-### Code Item Tracking
-```
-The following is an important list of code items that you have previously
-edited and viewed. Study this information carefully and only re-view code
-items if it is absolutely required to proceed.
-```
-
-### Context Truncation
-```
-no checkpoint found, truncating conversation to step index %d.
-current tokens: %d, token limit: %d
-```
-
-## Template Locations
-
-Internal template paths found:
-```
-google3/third_party/jetski/prompt/template_provider/templates/
-├── system_prompts/
-│   ├── notify_user_tool.tmpl
-│   ├── conversation_logs.tmpl
-│   ├── ephemeral_message.tmpl
-│   └── mode_descriptions.tmpl
-└── helpers/
-```
+Extracted from Antigravity 1.104.0 installation.
 
 ## Disclaimer
 
-This is a reverse-engineering effort for educational purposes. The extracted content is from a compiled binary and may be incomplete or partially accurate.
-
-## License
-
-Analysis and documentation are provided as-is for research purposes.
+This is a reverse-engineering effort for educational purposes. The extracted content may be incomplete or partially accurate.
